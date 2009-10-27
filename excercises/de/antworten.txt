@@ -1,0 +1,80 @@
+Structural (oder auch generic) comparison, hashing, equality 
+Ergänzung: Printing
+    
+Equality:
+    Beschreibung:
+        Strukturelle Gleichheit  - auch Isomorphie genannt (gr. isos „gleich“, und morphe „Form“, „Gestalt“) - ist dann gegeben, 
+        wenn die Eigentschaften einer Klasse als gleich angesehen werden können, auch wenn die Typnamen beide nicht identisch sind.
+
+    Problemstellung:
+        Zeiger und andere änderbare Daten und Zustände.
+
+Generell:
+    - Spezielle Implementierung über Interfaces oder Überschreiben von Basisfunktionalität aus System.Object
+    - Standardimplementierung (vor allem bei hashing) vorhanden.
+
+Comparison:
+    Interface System.IComparable:
+        public interface IComparable
+        {
+            int CompareTo(object obj);
+        }
+    
+    Basisfunktion aus System.Object:
+    public class Object
+    {
+        //...
+        public virtual bool Equals(object obj);
+        //...
+    }
+
+    
+    Hinweis:
+        Datenstrukturen sind durch ihre Eigenschaften deffiniert. 
+        Beim Vergleich werden die Eigenschaften von zwei verschiedenen Strukturen überprüft.
+        Vorsicht ist hier bei veränderbaren (mutable) Datentypen geboten - vor allem mit Feldern die Zeiger verwenden.
+        Durch das ändern der Werte kann sich das Ergebnis des Vergleichs ändern.
+    
+    Geben sind zwei Objekte a und b.
+    
+    Rückgabe    | Operation
+    -1          | a < b
+    0           | a == b
+    1           | a > b
+    
+    F# Implementierungen zu finden unter Microsoft.FSharp.Math.Primitives
+    
+Hashing:
+    Interface Microsoft.FSharp.Core.IStructuralHash.IStructuralHash:
+    
+    Basisfunktion aus System.Object:
+        public class Object
+        {
+            //...
+            public virtual int GetHashCode();
+            //...
+        }
+    
+    Hinweis:
+        Beim Hashing (Streuwertfunktion) wird zu einer 
+        
+    Problemstellung:
+        Aufgrund des Algorythmus sind Kollisionen vorprogrammiert. Geeignete Funktionen verringern die Wahrscheinlichkeit.
+        Siehe auch Geburtstagsparadoxon (http://de.wikipedia.org/wiki/Geburtstagsparadoxon)
+
+(Printing:
+    Interface System.IFormattable:
+        public interface IFormattable
+        {
+            // Methods
+            string ToString(string format, IFormatProvider formatProvider);
+        }
+    
+    Basisfunktion aus System.Object:
+        public class Object
+        {
+            //...
+            public virtual string ToString();
+            //...
+        }
+)
